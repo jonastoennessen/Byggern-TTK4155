@@ -2,6 +2,6 @@
 #ifndef SRAM_TEST_H
 #define SRAM_TEST_H
 
-void SRAM_test(void)
+void SRAM_test(void);
 
 #endif
