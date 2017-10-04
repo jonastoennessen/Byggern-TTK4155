@@ -7,34 +7,31 @@
 #define baud_rate 9600 // Setting baud rate to 9600 bits per second
 #include <util/delay.h>
 
-#include "UART_driver.h"
+#include "uart.h"
 #include "memory.h"
-#include "SRAM_test.h"
+#include "adc.h"
+#include "joystick.h"
+#include "slider.h"
 
+#include "uart_test.h"
+#include "sram_test.h"
+#include "multiboard_test.h"
 
 int main(void)
 {
 	
-	
-	UART_init();
+	uart_init();
 	memory_init();
+	adc_init();
+	joy_init();
+	slider_init();
+	oled_init();
 	
-	while(1){
-		char d[10];
-		scanf("%s",d);
-		printf("String = %s", d);
-	}
 	
-	while(1)
+	while (1)
 	{
-		SRAM_test();
-		//*sram = 1;
-		//*adc = 1;
-		//*oled_cmd = 1;
-		//*oled_data = 1;
-		//_delay_us(1);
+		
 	}
-	
 	
 	return 0;
 	
