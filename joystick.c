@@ -6,43 +6,51 @@
 #include "adc.h"
 #include "joystick.h"
 
+#define direction_threshold 50
+
+uint8_t x_offset, y_offset;
+
 void joy_init(void)
 {
 	adc_init();
 	
 	// Calibrate joystick x and y direction
-	uint8_t x_offset = adc_read(joystick_x);
-	uint8_t y_offset = adc_read(joystick_y);
+	x_offset = adc_read(0);
+	y_offset = adc_read(1);
 }
 
 joy_pos get_joy_pos(void)
 {
-	uint8_t x_t = adc_read(joystick_x);
-	uint8_t y_t = adc_read(joystick_y);
+	joy_pos joystick_position;
+	
+	uint8_t x_t, y_t;
+	
+	x_t = adc_read(0);
+	y_t = adc_read(1);
 	
 	// Calculating the time-varying x position of the joystick
 	if(x_t > x_offset){
-		joy_pos.x = 100 * (x_t - x_offset)/(0xFF - x_offset);
+		joystick_position.x = 100 * (x_t - x_offset)/(0xFF - x_offset);
 	}
 	else if(x_t < x_offset){
-		joy_pos.x = 100 * (x_t - x_offset)/(0xFF - x_offset);
+		joystick_position.x = 100 * (x_t - x_offset)/(0xFF - x_offset);
 	}
 	else{
-		joy_pos.x = 0;
+		joystick_position.x = 0;
 	}
 	
 	// Calculating the time-varying y position of the joystick
 	if(y_t > y_offset){
-		joy_pos.y = 100 * (y_t - y_offset)/(0xFF - y_offset);
+		joystick_position.y = 100 * (y_t - y_offset)/(0xFF - y_offset);
 	}
 	else if(y_t < y_offset){
-		joy_pos.y = 100 * (y_t - y_offset)/(0xFF - y_offset);
+		joystick_position.y = 100 * (y_t - y_offset)/(0xFF - y_offset);
 	}
 	else{
-		joy_pos.y = 0;
+		joystick_position.y = 0;
 	}
 	
-	return joy_pos;	
+	return joystick_position;	
 }
 
 joy_pos get_joy_dir(void)

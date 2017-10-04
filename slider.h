@@ -7,7 +7,7 @@ typedef struct{
 	uint8_t r;
 	} slider_pos;
 
-
-
+void slider_init(void);
+slider_pos get_slider_pos(void);
 
 #endif /* SLIDER_H_ */
